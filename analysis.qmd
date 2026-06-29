@@ -64,6 +64,7 @@ samples <- tibble(replicate = 1:1000) |>
   select(replicate, sample_mean, sample_se, lower, upper)
 ```
 
+
 This plot displays the first 100 sample means with their corresponding 95% confidence intervals. The dashed red line represents the true mean age of the entire dataset. Most of the intervals contain the true mean, demonstrating that repeated random samples often recover the population mean.
 ```{r}
 set.seed(10)
@@ -90,7 +91,13 @@ samples |>
     x = "Estimate",
     y = "Sample"
   ) +
+  scale_y_discrete(breaks = seq(10, 100, by = 10)) +
   theme_minimal()
 ```
 
+This is the fraction of the 1000 samples that contain the true mean age of the shaming tibble. A coverage fraction close to 0.95 indicates that our confidence intervals are well-calibrated and provide a reliable estimate of the population parameter.
+```{r}
+coverage_fraction <- mean(samples$lower < truth & samples$upper > truth)
+print(coverage_fraction)
+```
 
