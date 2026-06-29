@@ -2,5 +2,16 @@
 title: "Sampling"
 author: "Oluchi Nnadi"
 format: html
+execute:
+  echo: false
 ---
 
+```{r}
+#| message: false
+library(tidyverse)
+library(primer.data)
+```
+
+```{r}
+shaming
+```
