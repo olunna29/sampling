@@ -73,27 +73,40 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>This bar shows a 95% confidence interval for the mean age of the shaming tibble based on a sample of 50 observations. The dashed red line represents the true mean age of the entire dataset. The fact that the confidence interval includes the true mean suggests that our sample provides a reasonable estimate of the population parameter.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
+<pre><code>[1] "The true mean age of the shaming tibble:"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] 49.78635</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "The  mean age of our sample (n = 50):"</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 50.02</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
+<pre><code>[1] "The standard error of our sample:"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.02565</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: `geom_errorbarh()` was deprecated in ggplot2 4.0.0.
-ℹ Please use the `orientation` argument of `geom_errorbar()` instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`height` was translated to `width`.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot displays the first 100 sample means with their corresponding 95% confidence intervals. The dashed red line represents the true mean age of the entire dataset. Most of the intervals contain the true mean, demonstrating that repeated random samples often recover the population mean.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

@@ -12,6 +12,8 @@ library(tidyverse)
 library(primer.data)
 ```
 
+
+This bar shows a 95% confidence interval for the mean age of the shaming tibble based on a sample of 50 observations. The dashed red line represents the true mean age of the entire dataset. The fact that the confidence interval includes the true mean suggests that our sample provides a reasonable estimate of the population parameter.
 ```{r}
 set.seed(10)
 truth <- mean(shaming$age, na.rm = TRUE)
@@ -20,8 +22,11 @@ my_sample <- sample_n(shaming, 50)
 sample_mean <- mean(my_sample$age, na.rm = TRUE)
 sample_se <- sd(my_sample$age, na.rm = TRUE) / sqrt(nrow(my_sample))
 
+print("The true mean age of the shaming tibble:")
 print(truth)
+print("The  mean age of our sample (n = 50):")
 print(sample_mean)
+print("The standard error of our sample:")
 print(sample_se)
 
 tibble(
@@ -31,7 +36,7 @@ tibble(
 ) |>
   ggplot(aes(x = estimate, y = 0)) +
   geom_point(size = 3) +
-  geom_errorbarh(aes(xmin = lower, xmax = upper), height = 0.1) +
+  geom_errorbar(aes(xmin = lower, xmax = upper), orientation = "y", width = 0.1) +
   geom_vline(aes(xintercept = truth), color = "red", linetype = "dashed") +
   labs(
     title = "Sample mean estimate with a 95% error bar",
@@ -42,3 +47,50 @@ tibble(
   theme_minimal() +
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
 ```
+
+
+```{r}
+#| cache: true
+set.seed(10)
+
+samples <- tibble(replicate = 1:1000) |>
+  mutate(
+    sample = map(replicate, ~ sample_n(shaming, 50)),
+    sample_mean = map_dbl(sample, ~ mean(.x$age, na.rm = TRUE)),
+    sample_se = map_dbl(sample, ~ sd(.x$age, na.rm = TRUE) / sqrt(nrow(.x))),
+    lower = sample_mean - 1.96 * sample_se,
+    upper = sample_mean + 1.96 * sample_se
+  ) |>
+  select(replicate, sample_mean, sample_se, lower, upper)
+```
+
+This plot displays the first 100 sample means with their corresponding 95% confidence intervals. The dashed red line represents the true mean age of the entire dataset. Most of the intervals contain the true mean, demonstrating that repeated random samples often recover the population mean.
+```{r}
+set.seed(10)
+
+samples <- tibble(replicate = 1:1000) |>
+  mutate(
+    sample = map(replicate, ~ sample_n(shaming, 50)),
+    sample_mean = map_dbl(sample, ~ mean(.x$age, na.rm = TRUE)),
+    sample_se = map_dbl(sample, ~ sd(.x$age, na.rm = TRUE) / sqrt(nrow(.x))),
+    lower = sample_mean - 1.96 * sample_se,
+    upper = sample_mean + 1.96 * sample_se
+  ) |>
+  select(replicate, sample_mean, sample_se, lower, upper)
+
+samples |>
+  slice_head(n = 100) |>
+  ggplot(aes(y = factor(replicate))) +
+  geom_point(aes(x = sample_mean), size = 2) +
+  geom_errorbar(aes(xmin = lower, xmax = upper), orientation = "y", width = 0.1) +
+  geom_vline(aes(xintercept = truth), color = "red", linetype = "dashed") +
+  labs(
+    title = "First 100 sample means with 95% confidence intervals",
+    subtitle = "Most intervals contain the truth, showing that repeated random samples often recover the population mean.",
+    x = "Estimate",
+    y = "Sample"
+  ) +
+  theme_minimal()
+```
+
+
