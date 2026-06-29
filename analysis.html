@@ -139,11 +139,27 @@ ul.task-list li input[type="checkbox"] {
 <pre><code>[1] 1.519409</code></pre>
 </div>
 </div>
+<p>This plot displays the first 100 biased sample means with their corresponding 95% confidence intervals. The dashed red line represents the true mean age of the entire dataset. Many of the intervals do not contain the true mean, indicating that the biased sampling scheme skews the estimates toward older voters.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is the fraction of the 1000 biased samples that contain the true mean age of the shaming tibble. A coverage fraction significantly lower than 0.95 indicates that our confidence intervals are not well-calibrated due to the biased sampling method, leading to unreliable estimates of the population parameter.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.478</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
