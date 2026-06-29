@@ -13,5 +13,32 @@ library(primer.data)
 ```
 
 ```{r}
-shaming
+set.seed(10)
+truth <- mean(shaming$age, na.rm = TRUE)
+
+my_sample <- sample_n(shaming, 50)
+sample_mean <- mean(my_sample$age, na.rm = TRUE)
+sample_se <- sd(my_sample$age, na.rm = TRUE) / sqrt(nrow(my_sample))
+
+print(truth)
+print(sample_mean)
+print(sample_se)
+
+tibble(
+  estimate = sample_mean,
+  lower = sample_mean - 1.96 * sample_se,
+  upper = sample_mean + 1.96 * sample_se
+) |>
+  ggplot(aes(x = estimate, y = 0)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = lower, xmax = upper), height = 0.1) +
+  geom_vline(aes(xintercept = truth), color = "red", linetype = "dashed") +
+  labs(
+    title = "Sample mean estimate with a 95% error bar",
+    subtitle = "The sample mean is close to the population truth, suggesting this sample provides a reasonable estimate.",
+    x = "Estimate",
+    y = ""
+  ) +
+  theme_minimal() +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
 ```
